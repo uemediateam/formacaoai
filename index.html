@@ -386,7 +386,7 @@
     <p class="fase-desc">Alinhar vocabulário, princípios de IA generativa e técnicas de prompting. Mesmos cursos para todos os departamentos.</p>
     <p class="section-divider">Cursos</p>
     <div id="cursos-fase1"></div>
-    <div class="entreg"><b>Entregável:</b> cada colaborador escreve e testa 5 prompts para tarefas reais do seu papel e partilha-os no repositório comum.</div>
+    <div class="entreg"><b>Entregável:</b> cada colaborador escreve e testa 5 prompts para tarefas reais do seu papel e partilha-os em reunião.</div>
   </div>
 
   <div class="fase fase-2" data-fase="2">
@@ -398,7 +398,7 @@
       </div>
       <div class="fase-pill">Semanas 3–6</div>
     </div>
-    <p class="fase-desc">Cada colaborador segue a trilha do seu departamento. Sessão semanal de 30 min em equipa para partilha cruzada.</p>
+    <p class="fase-desc">Cada colaborador segue o percurso do seu departamento.</p>
     <p class="section-divider">Departamento</p>
     <div class="dept-bar" id="deptBar">
       <div class="dept-btn" data-d="A">Produção</div>
@@ -418,7 +418,7 @@
       </div>
       <div class="fase-pill">Semanas 7–16</div>
     </div>
-    <p class="fase-desc">Cada departamento implementa os seus projetos finais. As tarefas são editáveis — podes adicionar, remover e marcar como concluídas. Atribui um responsável a cada projeto e etapa.</p>
+    <p class="fase-desc">Cada departamento implementa os seus projetos finais. As tarefas são editáveis, na medida em que podes adicionar, remover e marcar como concluídas. Atribui um responsável a cada projeto e etapa.</p>
     <p class="section-divider">Departamento</p>
     <div class="pf-bar" id="pfBar">
       <div class="pf-btn active" data-pf="A">Produção</div>
@@ -444,8 +444,6 @@
     <p class="section-divider">Continuidade</p>
     <ul class="aplic-list">
       <li>Repositório partilhado de prompts validados, organizado por departamento</li>
-      <li>Sessão mensal "AI show & tell" de 30 minutos</li>
-      <li>Revisão trimestral da política interna face à evolução das ferramentas</li>
       <li>"AI lead" por departamento como ponto de contacto e curador</li>
     </ul>
     <p class="section-divider">Indicadores de sucesso</p>
@@ -937,34 +935,32 @@
   var deptData = {
     A: {
       nome:"Produção",
-      foco:"Gestão de projetos, comunicação com clientes, orçamentação, breakdowns, follow-ups e atas de reunião.",
+      foco:"Gestão de projetos, comunicação, breakdowns, follow-ups e atas de reunião.",
       cursos:[
         ["A-1","Claude 101","Anthropic · ~1h · conversação eficaz para tarefas de produção e coordenação · login com email","https://anthropic.skilljar.com/claude-101"],
         ["A-2","Introduction to Claude Cowork","Anthropic · ~2h · gerir ficheiros, briefings e agendas com IA · login com email","https://anthropic.skilljar.com/introduction-to-claude-cowork"],
-        ["A-3","Power Automate — Automatizar processos de negócio","Microsoft Learn · ~3h · em PT · automação de fluxos e folhas de serviço · acesso direto","https://learn.microsoft.com/pt-pt/training/paths/automate-process-power-automate/"],
+        ["A-3","Power Automate — Automatizar processos de negócio","Microsoft Learn · ~3h · em PT · automatização de fluxos e folhas de serviço · acesso direto","https://learn.microsoft.com/pt-pt/training/paths/automate-process-power-automate/"],
         ["A-4","Introdução ao Power Automate com Copilot","Microsoft Learn · ~1h · criar fluxos com IA · acesso direto","https://learn.microsoft.com/en-us/training/modules/introduction-power-automate/"]
       ],
       aplicacao:[
-        "Breakdown automático de guião para mapa de produção",
-        "Modelos de email para diferentes fases de cliente",
-        "Resumos automáticos de reuniões com extração de tarefas",
-        "Primeiros orçamentos a partir de descrição de projeto"
+        "Modelos de email para diferentes fases de produção",
+        "Resumos automáticos de reuniões com extração de tarefas"
       ]
     },
     B: {
       nome:"Design Gráfico",
-      foco:"Ideação visual, mood boards, concept art, lower thirds, branding, posters e adaptações multi-formato.",
+      foco:"Visual, mood boards, concept art, lower thirds, branding e adaptações multi-formato.",
       cursos:[
         ["B-1","Adobe Firefly — tutoriais oficiais","Adobe Help · ~3h · Generative Fill, Text to Image, Vector · acesso direto · Adobe ID para praticar","https://helpx.adobe.com/firefly/get-set-up/learn-the-basics/firefly-tutorials.html"],
         ["B-2","Runway Academy — Workflows criativos e imagem","Runway · ~3h · workflows, geração de imagem, produção criativa · acesso direto","https://academy.runwayml.com/courses"],
-        ["B-3","Adobe MAX — Automação e IA no InDesign","Adobe · ~27 min · Auto Style, Generative Expand, Text to Image em InDesign · acesso direto","https://www.adobe.com/max/2024/sessions/na-techniques-to-maximize-automation-and-ai-tools-os311.html"],
+        ["B-3","Adobe MAX — Automatização e IA no InDesign","Adobe · ~27 min · Auto Style, Generative Expand, Text to Image em InDesign · acesso direto","https://www.adobe.com/max/2024/sessions/na-techniques-to-maximize-automation-and-ai-tools-os311.html"],
         ["B-4","Adobe Firefly — Tutoriais completos (Experience League)","Adobe · tutoriais oficiais de Text to Image, Generative Fill, Recolor e Shape Fill · acesso direto","https://experienceleague.adobe.com/en/docs/creative-cloud-enterprise-learn/cce-learning-hub/fireflyoverview/firefly-tutorials/overview"]
       ],
       aplicacao:[
-        "Mood boards e referências visuais para clientes",
-        "Variações de keyart e posters em 16:9, 9:16 e 1:1",
+        "Mood boards e referências visuais",
+        "Workflows e geração de imagem",
         "Lower thirds e grafismos base com Firefly",
-        "Exploração rápida de paletas e direção de arte"
+        "Text to Image, Generative Fill, Recolor e Shape Fill"
       ]
     },
     C: {
@@ -992,7 +988,7 @@
         ["D-1","Claude 101","Anthropic · ~1h · consulta de manuais técnicos, checklists de set e cálculos · login com email","https://anthropic.skilljar.com/claude-101"],
         ["D-2","Introduction to Claude Cowork","Anthropic · ~2h · organizar shootlogs, briefings e documentação técnica com IA · login com email","https://anthropic.skilljar.com/introduction-to-claude-cowork"],
         ["D-3","Runway Academy — Camera Control","Runway · ~2h · pans, tilts, zooms e movimentos de câmara para pré-visualização de planos · acesso direto","https://academy.runwayml.com/gen3-alpha/gen3-alpha-camera-control"],
-        ["D-4","Airtable Academy — Introdução ao Airtable","Airtable · ~2h · bases de dados, campos, automações e integrações · gratuito para todos os planos · login com email","https://academy.airtable.com/path/introduction-to-airtable"],
+        ["D-4","Airtable Academy — Introdução ao Airtable","Airtable · ~2h · bases de dados, campos, automatizações e integrações · gratuito para todos os planos · login com email","https://academy.airtable.com/path/introduction-to-airtable"],
         ["D-5","Canvas LMS — Instructor Getting Started","Canvas · ~2h · estrutura do LMS, módulos, publicação de conteúdos · acesso direto","https://community.canvaslms.com/t5/Canvas-Basics-Guide/ct-p/basics"]
       ],
       aplicacao:[
