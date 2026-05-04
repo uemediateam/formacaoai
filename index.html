@@ -527,7 +527,7 @@
     A: { nome: 'Produção', projs: [
       { id:'a-hub', nome:'Hub', desc:'Projeto central de automatização e gestão da Produção.', subs:[
         { id:'a-hub-manuais', nome:'Central de Manuais',
-          desc:'Agente Claude com todos os manuais internos — qualquer elemento pergunta em linguagem natural, em qualquer departamento.',
+          desc:'Versão especializada para Produção',
           etapas:[
             { label:'Módulo 1 — Base de conhecimento', semanas:'Sem. 1–2', tarefas:[]},
             { label:'Módulo 2 — Personalização e memória', semanas:'Sem. 3–4', tarefas:[]},
@@ -578,7 +578,7 @@
       ]},
     ]},
     C: { nome: 'Pós-produção', projs: [
-      { id:'c-hub', nome:'Hub', desc:'Projeto central de automatização da Pós-produção de Vídeo e Grafismo.', subs:[
+      { id:'c-hub', nome:'Hub', desc:'Projeto central de automatização de Pós-produção de Vídeo e Grafismo.', subs:[
         { id:'c-revisao', nome:'Revisão de Leituras & Vídeos',
           desc:'Hub centralizado de revisão com agentes IA',
           etapas:[
@@ -616,7 +616,15 @@
       ]},
     ]},
     D: { nome: 'Estúdios', projs: [
-      { id:'d-canvas', nome:'Automatização dos Carregamentos (Airtable → Canvas LMS)',
+       { id:'a-hub', nome:'Hub', desc:'Projeto central de automatização de Estúdios', subs:[
+        { id:'a-hub-manuais', nome:'Central de Manuais',
+          desc:'Versão especializada para Estúdios',
+          etapas:[
+            { label:'Módulo 1 — Base de conhecimento', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Módulo 2 — Personalização e memória', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+         { id:'d-canvas', nome:'Automatização dos Carregamentos (Airtable → Canvas LMS)',
         desc:'Upload automático de objetos de aprendizagem para o Canvas LMS quando a UC é marcada como pronta.',
         subs:[],
         etapas:[
