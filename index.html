@@ -306,7 +306,7 @@
 
     <div class="field">
       <label for="loginName">Nome</label>
-      <input type="text" id="loginName" placeholder="Ex: Ana Silva" autocomplete="name" />
+      <input type="text" id="loginName" placeholder="Ex: João Mariano" autocomplete="name" />
     </div>
 
     <div class="field">
@@ -351,7 +351,7 @@
 <div class="wrap" id="appContent" style="display:none">
   <div class="hero">
     <h1>Plano de formação em IA</h1>
-    <p>Equipa de produção audiovisual · 10 semanas</p>
+    <p>Equipa de produção audiovisual | 10 semanas</p>
   </div>
 
   <div class="intro-note"><b>Como funciona:</b> todos os colaboradores realizam os <b>cursos comuns</b> da Fase 1. Na Fase 2, cada um segue os cursos do <b>seu departamento</b>. A barra de progresso reflete os cursos da Fase 1 e os do teu departamento.</div>
@@ -409,12 +409,12 @@
 
   <div class="fase fase-3" data-fase="3">
     <div class="fase-head">
-      <div class="fase-num">4</div>
+      <div class="fase-num">3</div>
       <div>
         <p class="fase-title">Governança e continuidade</p>
         <p class="fase-sub">Para toda a equipa</p>
       </div>
-      <div class="fase-pill">Semanas 9–10</div>
+      <div class="fase-pill">Semanas 7–8</div>
     </div>
     <p class="fase-desc">Redação coletiva da política interna de IA: o que pode e não pode ser gerado, transparência com cliente, direitos de autor, dados confidenciais e créditos.</p>
     <p class="section-divider">Cursos de apoio</p>
@@ -423,12 +423,12 @@
 
   <div class="fase fase-4" data-fase="4">
     <div class="fase-head">
-      <div class="fase-num">3</div>
+      <div class="fase-num">4</div>
       <div>
         <p class="fase-title">Projeto Final</p>
         <p class="fase-sub">Por departamento</p>
       </div>
-      <div class="fase-pill">Semanas 7–16</div>
+      <div class="fase-pill">Semanas +9</div>
     </div>
     <p class="fase-desc">Cada departamento implementa os seus projetos finais. As tarefas são editáveis, na medida em que podes adicionar, remover e marcar como concluídas. Atribui um responsável a cada projeto e etapa.</p>
     <p class="section-divider">Departamento</p>
@@ -442,8 +442,8 @@
   </div>
 
   <div class="footer">
-    Universidade Europeia Online · Plano de formação em IA para produção audiovisual<br>
-    O teu progresso é guardado automaticamente. Atualizado em abril de 2026.
+    Universidade Europeia Online | Plano de formação em IA para produção audiovisual<br>
+    O teu progresso é guardado automaticamente. Atualizado em maio de 2026.
   </div>
 </div>
 
@@ -1215,8 +1215,8 @@
         { id:'a-hub-manuais', nome:'Central de Manuais',
           desc:'Agente Claude com todos os manuais internos — qualquer elemento pergunta em linguagem natural, em qualquer departamento.',
           etapas:[
-            { label:'Etapa 1 — Base de conhecimento', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Personalização e memória', semanas:'Sem. 3–4', tarefas:[]},
+            { label:'Etapa 1 — Base de conhecimento', tarefas:[]},
+            { label:'Etapa 2 — Personalização e memória', tarefas:[]},
           ]
         },
       ]},
@@ -1224,41 +1224,41 @@
         desc:'App Claude completa para professores agendarem slots de gravação com regras de tipologia, confirmação por Produção, agendamento automático no Outlook dos Estúdios e folhas de serviço diárias na véspera.',
         subs:[],
         etapas:[
-          { label:'Etapa 1 — Ligação Airtable → App', semanas:'Sem. 1–2', tarefas:[]},
-          { label:'Etapa 2 — Interface de agenda e slots', semanas:'Sem. 3–5', tarefas:[]},
-          { label:'Etapa 3 — Confirmação e Outlook', semanas:'Sem. 6–7', tarefas:[]},
-          { label:'Etapa 4 — Folhas de serviço automáticas', semanas:'Sem. 8–9', tarefas:[]},
-          { label:'Etapa 5 — Editabilidade ao longo do tempo', semanas:'Sem. 10', tarefas:[]},
+          { label:'Etapa 1 — Ligação Airtable → App', tarefas:[]},
+          { label:'Etapa 2 — Interface de agenda e slots', tarefas:[]},
+          { label:'Etapa 3 — Confirmação e Outlook', tarefas:[]},
+          { label:'Etapa 4 — Folhas de serviço automáticas', tarefas:[]},
+          { label:'Etapa 5 — Editabilidade ao longo do tempo', tarefas:[]},
         ]
       },
     ]},
     B: { nome: 'Design Gráfico', projs: [
       { id:'b-hub', nome:'Hub', desc:'Projeto central de automatização criativa do Design Gráfico.', subs:[
         { id:'b-revisao', nome:'Revisão de Leituras & Vídeos',
-          desc:'Hub centralizado de revisão com agentes IA — relatório automático em 2 min por UC.',
+          desc:'Hub centralizado de revisão com agentes IA',
           etapas:[
-            { label:'Etapa 1 — Unificação do hub', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Melhoria e escala', semanas:'Sem. 3–4', tarefas:[]},
+            { label:'Etapa 1 — Unificação do hub', tarefas:[]},
+            { label:'Etapa 2 — Melhoria e escala', tarefas:[]},
           ]
         },
         { id:'b-imagens', nome:'Download de Imagens & Gráficos Automáticos para Guiões',
           desc:'Do guião aos assets em segundos — imagens Stock descarregadas, em falta geradas com IA, gráficos criados com prompts padronizados.',
           etapas:[
-            { label:'Etapa 1 — Pipeline de imagens', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Gráficos automáticos', semanas:'Sem. 3', tarefas:[]},
+            { label:'Etapa 1 — Pipeline de imagens', tarefas:[]},
+            { label:'Etapa 2 — Gráficos automáticos', tarefas:[]},
           ]
         },
         { id:'b-manuais', nome:'Central de Manuais',
           desc:'Ver Central de Manuais em Produção — versão especializada para Design Gráfico.',
           etapas:[
-            { label:'Configuração para Design Gráfico', semanas:'Sem. 3–4', tarefas:[]},
+            { label:'Configuração para Design Gráfico', tarefas:[]},
           ]
         },
         { id:'b-pdf', nome:'Índice Interativo em PDF & Deteção e Automação de Links',
           desc:'PDFs estáticos transformados em documentos navegáveis — índice clicável, links ativos, pacote InDesign exportado automaticamente.',
           etapas:[
-            { label:'Etapa 1 — Links e índice automáticos', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Montagem e exportação automática', semanas:'Sem. 3', tarefas:[]},
+            { label:'Etapa 1 — Links e índice automáticos', tarefas:[]},
+            { label:'Etapa 2 — Montagem e exportação automática', tarefas:[]},
           ]
         },
       ]},
@@ -1268,35 +1268,35 @@
         { id:'c-revisao', nome:'Revisão de Leituras & Vídeos',
           desc:'Hub centralizado de revisão com agentes IA — relatório automático em 2 min por UC.',
           etapas:[
-            { label:'Etapa 1 — Unificação do hub', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Melhoria e escala', semanas:'Sem. 3–4', tarefas:[]},
+            { label:'Etapa 1 — Unificação do hub', tarefas:[]},
+            { label:'Etapa 2 — Melhoria e escala', tarefas:[]},
           ]
         },
         { id:'c-imagens', nome:'Download de Imagens & Gráficos Automáticos para Guiões',
           desc:'Do guião aos assets em segundos — imagens Stock descarregadas e gráficos criados automaticamente.',
           etapas:[
-            { label:'Etapa 1 — Pipeline de imagens', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Gráficos automáticos', semanas:'Sem. 3', tarefas:[]},
+            { label:'Etapa 1 — Pipeline de imagens', tarefas:[]},
+            { label:'Etapa 2 — Gráficos automáticos', tarefas:[]},
           ]
         },
         { id:'c-manuais', nome:'Central de Manuais',
           desc:'Versão especializada para Pós-produção — normas técnicas, workflows e templates de edição.',
           etapas:[
-            { label:'Configuração para Pós-produção', semanas:'Sem. 3–4', tarefas:[]},
+            { label:'Configuração para Pós-produção', tarefas:[]},
           ]
         },
         { id:'c-leituras', nome:'Guiões de Leituras Animadas',
           desc:'Brief → guião completo + storyboard visual gerado com Claude e Runway em minutos.',
           etapas:[
-            { label:'Etapa 1 — Pipeline de guião', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Integração e consistência', semanas:'Sem. 3–4', tarefas:[]},
+            { label:'Etapa 1 — Pipeline de guião', tarefas:[]},
+            { label:'Etapa 2 — Integração e consistência', tarefas:[]},
           ]
         },
         { id:'c-motion', nome:'Motion Graphics Animados com IA (Runway)',
           desc:'Sticker Adobe Stock → animação HD com normas IPAM via Seedance 2.0 e Runway.',
           etapas:[
-            { label:'Etapa 1 — Padronização do workflow', semanas:'Sem. 1–2', tarefas:[]},
-            { label:'Etapa 2 — Integração no pipeline de entrega', semanas:'Sem. 3', tarefas:[]},
+            { label:'Etapa 1 — Padronização do workflow', tarefas:[]},
+            { label:'Etapa 2 — Integração no pipeline de entrega', tarefas:[]},
           ]
         },
       ]},
