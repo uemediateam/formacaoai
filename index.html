@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Formação em IA — Universidade Europeia Online</title>
+<style>
+  /* ==========================================================
+     UNIVERSIDADE EUROPEIA ONLINE — Normas gráficas
+     Tipografia: Hellix → Century Gothic → fallback geométricos
+     Geometria: rectangular / quadrada (sem cantos arredondados)
+     Paleta: pastel derivado de UE Red #FF3228, Electric Blue
+             #2D41B4, Keppel #23B4AA, UE Gray family
+     ========================================================== */
+  :root{
+    --bg:#FAF6F4;
+    --surface:#FFFFFF;
+    --surface-soft:#F5F0EC;
+    --border:#EDE3DD;
+    --border-strong:#E0D0C8;
+    --text:#1E1E1E;          /* UE Black */
+    --text-muted:#7D6F68;
+    --text-dim:#A89B93;
+
+    /* UE Red — pastel */
+    --coral-50:#FDE8E5;
+    --coral-100:#FCD9D2;
+    --coral-200:#F5C9C2;
+    --coral-700:#FF3228;
+    --coral-900:#CC1810;
+
+    /* Blush */
+    --blush-50:#FBEAE5;
+    --blush-100:#F8DDD6;
+
+    /* Electric Blue — pastel */
+    --blue-50:#E5E9F4;
+    --blue-100:#D7DCF0;
+    --blue-700:#2D41B4;
+    --blue-900:#1E2C7E;
+
+    /* Keppel — pastel */
+    --mint-50:#DCEFEB;
+    --mint-100:#C9EAE6;
+    --mint-700:#0F6E68;
+    --mint-900:#0A4A45;
+
+    /* UE Grays — quentes */
+    --cream-50:#F5F0EC;
+    --cream-100:#EDE3DD;
+    --gray-700:#504B4B;
+
+    --font:"Century Gothic","Hellix","URW Gothic","Avenir Next","Avenir","Futura",-apple-system,"Segoe UI",sans-serif;
+  }
+
+  *{box-sizing:border-box}
+  body{font-family:var(--font);margin:0;padding:0;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;font-weight:400;letter-spacing:.005em}
+  .wrap{max-width:780px;margin:0 auto;padding:2rem 1rem}
+
+  /* ===== Login screen ===== */
+  .login-overlay{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+  .login-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem 1.75rem 1.75rem;max-width:440px;width:100%}
+  .login-brand{display:flex;align-items:center;justify-content:flex-start;margin:0 0 1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
+  .login-card h1{margin:0 0 .4rem;font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.005em;line-height:1.25}
+  .login-card .lead{margin:0 0 1.5rem;font-size:13.5px;color:var(--text-muted);line-height:1.6}
+
+  .field{margin-bottom:1rem}
+  .field label{display:block;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--border-strong);background:var(--surface);font-size:14px;color:var(--text);font-family:inherit;transition:border-color .15s;border-radius:0;-webkit-appearance:none;appearance:none}
+  .field select{background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3e%3cpath d='M1 1.5L6 6.5L11 1.5' stroke='%237D6F68' stroke-width='1.5' stroke-linecap='square'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 14px center;background-size:11px;padding-right:36px}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--coral-700);box-shadow:0 0 0 2px var(--coral-100)}
+
+  .login-btn{width:100%;padding:13px 16px;background:var(--coral-700);color:#FFFFFF;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;margin-top:.5rem;text-transform:uppercase;letter-spacing:.06em;border-radius:0}
+  .login-btn:hover{background:var(--coral-900)}
+  .login-btn:disabled{opacity:.5;cursor:not-allowed}
+
+  .login-note{font-size:12px;color:var(--text-dim);text-align:left;margin:1rem 0 0;line-height:1.5}
+  .sync-status{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);margin-top:.6rem;padding:9px 12px;background:var(--cream-50);border:1px solid var(--border)}
+  .sync-status .dot{width:6px;height:6px;background:var(--mint-700);flex-shrink:0}
+  .sync-status .dot.warn{background:#A89B93}
+  .sync-status .dot.err{background:var(--coral-700)}
+
+  /* ===== Header ===== */
+  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:50}
+  .topbar-inner{max-width:780px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .topbar-brand{display:flex;align-items:center;gap:10px}
+  .topbar-user{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted)}
+  .user-chip{background:var(--cream-50);padding:6px 12px 6px 8px;display:flex;align-items:center;gap:10px;cursor:pointer;border:1px solid var(--border);transition:background .15s;font-family:inherit;border-radius:0}
+  .user-chip:hover{background:var(--cream-100)}
+  .user-avatar{width:24px;height:24px;background:var(--coral-700);color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;letter-spacing:.02em}
+  .user-name{font-weight:700;color:var(--text);font-size:13px;line-height:1.2}
+  .user-dept{color:var(--text-muted);font-size:11.5px;line-height:1.2;margin-top:1px}
+
+  /* ===== Hero ===== */
+  .hero{background:var(--surface);padding:1.5rem 1.5rem;margin-bottom:1.25rem;border:1px solid var(--border)}
+  .hero h1{margin:0 0 .35rem;font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.005em;line-height:1.25}
+  .hero p{margin:0;font-size:13.5px;color:var(--text-muted);line-height:1.55}
+
+  /* ===== Progress ===== */
+  .progress-card{background:var(--surface);padding:1rem 1.25rem;margin-bottom:1.25rem;border:1px solid var(--border);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .progress-info{flex:1;min-width:140px}
+  .progress-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin:0 0 4px}
+  .progress-text{font-size:14px;color:var(--text);font-weight:700;margin:0}
+  .progress-bar{flex:2;min-width:180px;height:6px;background:var(--cream-100);overflow:hidden;position:relative}
+  .progress-fill{height:100%;background:var(--coral-700);transition:width .4s ease;width:0%}
+  .progress-pct{font-size:20px;font-weight:700;color:var(--coral-900);min-width:50px;text-align:right;letter-spacing:-.01em}
+
+  /* ===== Tabs ===== */
+  .tabs{display:flex;gap:0;margin-bottom:1.25rem;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+  .tab{padding:10px 18px;font-size:12px;cursor:pointer;border:none;background:transparent;color:var(--text-muted);transition:all .15s;font-family:inherit;text-transform:uppercase;letter-spacing:.06em;font-weight:700;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--coral-900);border-bottom-color:var(--coral-900)}
+
+  /* ===== Phases ===== */
+  .fase{background:var(--surface);border:1px solid var(--border);padding:1.25rem 1.5rem 1.5rem;margin-bottom:1rem}
+  
+  
+  
+  
+  .fase-head{display:flex;align-items:center;gap:14px;margin-bottom:.4rem;flex-wrap:wrap}
+  .fase-num{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;background:var(--text);color:#FFFFFF}
+  .fase-1 .fase-num{background:var(--coral-700)}
+  .fase-2 .fase-num{background:var(--coral-700)}
+  .fase-3 .fase-num{background:var(--coral-700)}
+  .fase-4 .fase-num{background:var(--coral-700)}
+  .fase-title{font-size:17px;font-weight:700;color:var(--text);margin:0;letter-spacing:-.005em;line-height:1.25}
+  .fase-sub{font-size:12px;color:var(--text-muted);margin:.25rem 0 0;line-height:1.4}
+  .fase-pill{font-size:10.5px;padding:4px 10px;margin-left:auto;flex-shrink:0;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--cream-50);color:var(--text-muted);border:1px solid var(--border)}
+  .fase-1 .fase-pill{background:var(--coral-50);color:var(--coral-900);border-color:var(--coral-100)}
+  .fase-2 .fase-pill{background:var(--coral-50);color:var(--coral-900);border-color:var(--coral-100)}
+  .fase-3 .fase-pill{background:var(--coral-50);color:var(--coral-900);border-color:var(--coral-100)}
+  .fase-4 .fase-pill{background:var(--coral-50);color:var(--coral-900);border-color:var(--coral-100)}
+  .fase-desc{font-size:13.5px;color:var(--text-muted);line-height:1.65;margin:.85rem 0 1rem}
+
+  /* ===== Department selector ===== */
+  .dept-bar{display:flex;gap:6px;margin:0 0 1rem;flex-wrap:wrap}
+  .dept-btn{padding:9px 14px;font-size:12px;cursor:pointer;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted);transition:all .15s;font-family:inherit;font-weight:700;letter-spacing:.02em;border-radius:0;text-transform:uppercase}
+  .dept-btn:hover{background:var(--cream-50);color:var(--text)}
+  .dept-btn.active{border-color:var(--text);background:var(--text);color:#FFFFFF}
+  .dept-btn.active[data-d="A"]{background:var(--coral-700);border-color:var(--coral-700)}
+  .dept-btn.active[data-d="B"]{background:var(--blue-700);border-color:var(--blue-700)}
+  .dept-btn.active[data-d="C"]{background:var(--mint-700);border-color:var(--mint-700)}
+  .dept-btn.active[data-d="D"]{background:#7D7777;border-color:#7D7777}
+  .dept-foco{font-size:13px;color:var(--text-muted);margin:0 0 .9rem;line-height:1.6;padding:10px 12px;background:var(--cream-50);border:1px solid var(--border)}
+
+  /* ===== Section dividers ===== */
+  .section-divider{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin:1.1rem 0 .5rem;font-weight:700;padding-bottom:6px;border-bottom:1px solid var(--border)}
+
+  /* ===== Course rows ===== */
+  .curso-row{display:flex;align-items:stretch;gap:0;background:var(--surface);margin-bottom:6px;border:1px solid var(--border);transition:all .15s;overflow:hidden}
+  .curso-row:hover{border-color:var(--border-strong);background:var(--cream-50)}
+  .curso-row.done{background:var(--mint-50);border-color:var(--mint-100)}
+  .curso-row.done .curso-name{text-decoration:line-through;color:var(--mint-700);opacity:.7}
+  .curso-row.done .curso-meta{color:var(--mint-700);opacity:.55}
+  .check-btn{width:46px;background:transparent;border:none;border-right:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit;transition:background .15s;border-radius:0}
+  .check-btn:hover{background:var(--cream-100)}
+  .curso-row.done .check-btn{border-right-color:var(--mint-100)}
+  .check-square{width:18px;height:18px;border:2px solid var(--border-strong);background:var(--surface);display:flex;align-items:center;justify-content:center;transition:all .15s}
+  .curso-row.done .check-square{background:var(--mint-700);border-color:var(--mint-700)}
+  .check-square svg{opacity:0;transition:opacity .15s;width:11px;height:11px}
+  .curso-row.done .check-square svg{opacity:1}
+  .curso-link{flex:1;display:flex;align-items:center;gap:10px;padding:11px 14px;text-decoration:none;color:inherit;min-width:0}
+  .curso-body{flex:1;min-width:0}
+  .curso-name{font-size:14px;color:var(--text);font-weight:700;margin:0 0 2px;line-height:1.35}
+  .curso-meta{font-size:12px;color:var(--text-muted);margin:0;line-height:1.4}
+  .curso-arrow{color:var(--text-dim);font-size:14px;flex-shrink:0;transition:transform .15s;font-family:Arial,sans-serif}
+  .curso-link:hover .curso-arrow{transform:translate(2px,-2px);color:var(--coral-900)}
+
+  /* ===== Deliverable callout ===== */
+  .entreg{margin-top:.85rem;padding:12px 14px;background:var(--coral-50);font-size:13px;color:#5C1B16;line-height:1.6;border:1px solid var(--coral-100)}
+  .entreg b{font-weight:700}
+
+  /* ===== Application list ===== */
+  .aplic-list{margin:.5rem 0 0;padding:0;list-style:none}
+  .aplic-list li{font-size:13px;color:var(--text);padding:6px 0 6px 18px;position:relative;line-height:1.55}
+  .aplic-list li:before{content:"";position:absolute;left:4px;top:14px;width:6px;height:6px;background:var(--coral-700)}
+
+  /* ===== KPIs ===== */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;margin-top:.75rem;border:1px solid var(--blue-100)}
+  .kpi{background:var(--blue-50);padding:14px 16px;border-right:1px solid var(--blue-100);border-bottom:1px solid var(--blue-100)}
+  .kpi:last-child{border-right:0}
+  .kpi-val{font-size:22px;font-weight:700;color:var(--blue-700);margin:0;letter-spacing:-.01em;line-height:1}
+  .kpi-lbl{font-size:11px;color:var(--blue-900);margin:6px 0 0;line-height:1.35;opacity:.8;text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+
+  /* ===== Footer ===== */
+  .footer{text-align:left;font-size:11px;color:var(--text-dim);margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);line-height:1.7;text-transform:uppercase;letter-spacing:.06em}
+
+  /* ===== Toast ===== */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--surface);padding:11px 18px;font-size:12px;opacity:0;transition:all .25s;pointer-events:none;z-index:200;display:flex;align-items:center;gap:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:0}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+  .toast.error{background:var(--coral-700)}
+  .toast .spinner{width:12px;height:12px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ===== Settings modal ===== */
+  .modal-back{position:fixed;inset:0;background:rgba(30,30,30,.5);z-index:300;display:none;align-items:center;justify-content:center;padding:1rem}
+  .modal-back.show{display:flex}
+  .modal{background:var(--surface);padding:1.5rem 1.5rem 1.75rem;max-width:420px;width:100%;border:1px solid var(--border)}
+  .modal h2{margin:0 0 1.25rem;font-size:17px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.04em}
+  .modal-actions{display:flex;gap:8px;margin-top:1rem}
+  .modal-actions button{flex:1;padding:11px 14px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:13px;cursor:pointer;font-family:inherit;font-weight:700;transition:all .15s;border-radius:0;text-transform:uppercase;letter-spacing:.06em}
+  .modal-actions button:hover{background:var(--cream-50)}
+  .modal-actions .primary{background:var(--coral-700);color:#FFFFFF;border-color:var(--coral-900)}
+  .modal-actions .primary:hover{background:var(--coral-900);border-color:var(--coral-900)}
+  .danger-link{font-size:11px;color:var(--coral-700);text-align:center;display:block;margin-top:1rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+  .danger-link:hover{color:var(--coral-900)}
+
+  @media (max-width:520px){
+    .wrap{padding:1.25rem .75rem}
+    .hero{padding:1.25rem 1rem}
+    .hero h1{font-size:20px}
+    .fase{padding:1.1rem 1.1rem}
+    .progress-bar{flex:1 1 100%;order:3}
+    .topbar-user{margin-left:0;width:100%;justify-content:flex-end}
+    .login-card{padding:1.25rem 1.25rem 1.5rem}
+  }
+
+  /* ===== Projecto Final — checklists ===== */
+  .proj-dept-bar{display:flex;gap:6px;margin:0 0 1rem;flex-wrap:wrap}
+  .proj-btn{padding:9px 14px;font-size:12px;cursor:pointer;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted);transition:all .15s;font-family:inherit;font-weight:700;letter-spacing:.02em;border-radius:0;text-transform:uppercase}
+  .proj-btn:hover{background:var(--cream-50);color:var(--text)}
+  .proj-btn.active{border-color:transparent;font-weight:700;color:#fff}
+  .proj-btn.active[data-p="ED"]{background:var(--coral-700);border-color:var(--coral-700)}
+  .proj-btn.active[data-p="PR"]{background:var(--mint-700);border-color:var(--mint-700)}
+  .proj-btn.active[data-p="ES"]{background:var(--blue-700);border-color:var(--blue-700)}
+  .proj-block{margin-bottom:1.25rem}
+  .proj-name{font-size:15px;font-weight:700;color:var(--text);margin:0 0 2px}
+  .proj-desc{font-size:13px;color:var(--text-muted);margin:0 0 .75rem;line-height:1.5}
+  .etapa-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;padding:6px 10px;background:var(--cream-50);border:1px solid var(--border);margin:.75rem 0 .4rem;display:flex;align-items:center;justify-content:space-between}
+  .etapa-semana{font-size:10px;color:var(--text-dim);font-weight:400;text-transform:none;letter-spacing:0}
+  .task-item{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:0;border:1px solid var(--border);background:var(--surface);margin-bottom:5px;transition:all .15s;cursor:pointer}
+  .task-item:hover{background:var(--cream-50);border-color:var(--border-strong)}
+  .task-item.done-task{background:var(--mint-50);border-color:var(--mint-100)}
+  .task-item.done-task .task-text{text-decoration:line-through;color:var(--mint-700);opacity:.7}
+  .task-sq{width:16px;height:16px;border:2px solid var(--border-strong);background:var(--surface);flex-shrink:0;margin-top:2px;transition:all .15s;display:flex;align-items:center;justify-content:center}
+  .task-item.done-task .task-sq{background:var(--mint-700);border-color:var(--mint-700)}
+  .task-chk{opacity:0;transition:opacity .15s;width:10px;height:10px}
+  .task-item.done-task .task-chk{opacity:1}
+  .task-text{font-size:13.5px;color:var(--text);line-height:1.45}
+  .proj-divider{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
+
+  /* ===== Projeto Final ===== */
+  .pf-bar{display:flex;gap:6px;margin:0 0 1rem;flex-wrap:wrap}
+  .pf-btn{padding:9px 14px;font-size:12px;cursor:pointer;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted);transition:all .15s;font-family:inherit;font-weight:700;letter-spacing:.02em;border-radius:0;text-transform:uppercase}
+  .pf-btn:hover{background:var(--cream-50);color:var(--text)}
+  .pf-btn.active{border-color:transparent;color:#fff}
+  .pf-btn.active[data-pf="A"]{background:var(--coral-700);border-color:var(--coral-700)}
+  .pf-btn.active[data-pf="B"]{background:var(--blue-700);border-color:var(--blue-700)}
+  .pf-btn.active[data-pf="C"]{background:var(--mint-700);border-color:var(--mint-700)}
+  .pf-btn.active[data-pf="D"]{background:#7D7777;border-color:#7D7777}
+  .pf-content{min-height:40px}
+  .pf-main{margin-bottom:1.25rem}
+  .pf-main-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:.35rem}
+  .pf-main-name{font-size:15px;font-weight:700;color:var(--text);margin:0}
+  .pf-main-resp{display:flex;align-items:center;gap:6px}
+  .pf-resp-label{font-size:11px;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .pf-resp-wrap{display:inline-flex;flex-wrap:wrap;align-items:center;gap:3px;border:1px solid var(--border);background:var(--surface);padding:3px 6px;min-width:140px;max-width:260px;cursor:text}
+  .pf-resp-wrap:focus-within{border-color:var(--coral-700)}
+  .pf-resp-chip{display:inline-flex;align-items:center;gap:4px;background:var(--coral-50);color:var(--coral-700);border:1px solid var(--coral-100);padding:2px 6px;font-size:11px;font-weight:700}
+  .pf-resp-chip-del{background:none;border:none;color:var(--coral-700);cursor:pointer;font-size:12px;line-height:1;padding:0;font-family:inherit;opacity:.7}
+  .pf-resp-chip-del:hover{opacity:1}
+  .pf-resp-input{border:none;outline:none;font-size:12px;color:var(--text);font-family:inherit;background:transparent;min-width:60px;flex:1;padding:1px 2px}
+  .pf-resp-placeholder{font-size:11px;color:var(--text-dim);font-style:italic;pointer-events:none}
+  .pf-main-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin:0 0 .6rem}
+  .pf-sub-list{margin-left:.75rem;border-left:2px solid var(--border);padding-left:.85rem}
+  .pf-sub{margin-bottom:1rem}
+  .pf-sub-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:.2rem}
+  .pf-sub-name{font-size:13.5px;font-weight:700;color:var(--text);margin:0}
+  .pf-divider{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
+  .etapa-hd{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--cream-50);border:1px solid var(--border);margin:.7rem 0 .35rem}
+  .etapa-hd-left{display:flex;align-items:center;gap:8px}
+  .etapa-name{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+  .etapa-weeks{font-size:10.5px;color:var(--text-dim)}
+  .etapa-resp-wrap{display:flex;align-items:center;gap:5px}
+  .task-row{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border:1px solid var(--border);background:var(--surface);margin-bottom:4px;cursor:pointer;transition:all .15s}
+  .task-row:hover{background:var(--cream-50);border-color:var(--border-strong)}
+  .task-row.done{background:var(--mint-50);border-color:var(--mint-100)}
+  .task-row.done .task-lbl{text-decoration:line-through;color:var(--mint-700);opacity:.7}
+  .task-chk-sq{width:15px;height:15px;border:2px solid var(--border-strong);background:var(--surface);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+  .task-row.done .task-chk-sq{background:var(--mint-700);border-color:var(--mint-700)}
+  .task-chk-svg{opacity:0;transition:opacity .15s;width:10px;height:10px}
+  .task-row.done .task-chk-svg{opacity:1}
+  .task-lbl{font-size:13px;color:var(--text);line-height:1.4;flex:1}
+  .task-del{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:0 2px;line-height:1;flex-shrink:0;opacity:.5;font-family:inherit}
+  .task-del:hover{opacity:1;color:#FF3228}
+  .add-task-row{display:flex;align-items:center;gap:6px;margin-top:4px}
+  .add-task-input{flex:1;font-size:12.5px;border:1px dashed var(--border-strong);background:var(--surface);padding:6px 10px;color:var(--text);font-family:inherit;border-radius:0;outline:none}
+  .add-task-input:focus{border-color:var(--coral-700);border-style:solid}
+  .add-task-btn{padding:5px 10px;background:var(--coral-50);border:1px solid var(--coral-100);color:var(--coral-700);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:0;transition:all .15s}
+  .add-task-btn:hover{background:var(--coral-100)}
+  .intro-note{background:var(--blue-50);border:1px solid var(--blue-100);padding:12px 16px;margin-bottom:1.25rem;font-size:13.5px;color:var(--blue-900);line-height:1.6}
+  .intro-note b{font-weight:700}
+  .ue-logo-img{height:28px;width:auto;display:block}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="login-brand">
+      <img class="ue-logo-img" id="loginLogo" alt="Universidade Europeia Online" />
+    </div>
+    <h1>Bem-vindo(a) à formação em IA</h1>
+    <p class="lead">Identifica-te para começarmos. O teu progresso fica guardado e podes voltar quando quiseres.</p>
+
+    <div class="field">
+      <label for="loginName">Nome</label>
+      <input type="text" id="loginName" placeholder="Ex: Ana Silva" autocomplete="name" />
+    </div>
+
+    <div class="field">
+      <label for="loginDept">Departamento</label>
+      <select id="loginDept">
+        <option value="">Seleciona...</option>
+        <option value="Produção">Produção</option>
+        <option value="Design Gráfico">Design Gráfico</option>
+        <option value="Pós-produção">Pós-produção de Vídeo e Grafismo</option>
+        <option value="Estúdios">Estúdios</option>
+      </select>
+    </div>
+
+    <button class="login-btn" id="loginBtn">Entrar</button>
+
+    <p class="login-note">Podes alterar o teu nome ou departamento depois de entrar.</p>
+    <div class="sync-status" id="syncStatusLogin">
+      <span class="dot"></span>
+      <span id="syncTextLogin">A verificar ligação ao servidor...</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div class="topbar" id="topbar" style="display:none">
+  <div class="topbar-inner">
+    <div class="topbar-brand">
+      <img class="ue-logo-img" id="topbarLogo" alt="Universidade Europeia Online" />
+    </div>
+    <div class="topbar-user">
+      <button class="user-chip" id="userChip" title="Alterar identificação">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div>
+          <div class="user-name" id="userNameDisplay"></div>
+          <div class="user-dept" id="userDeptDisplay"></div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="appContent" style="display:none">
+  <div class="hero">
+    <h1>Plano de formação em IA</h1>
+    <p>Equipa de produção audiovisual · 10 semanas</p>
+  </div>
+
+  <div class="intro-note"><b>Como funciona:</b> todos os colaboradores realizam os <b>cursos comuns</b> da Fase 1. Na Fase 2, cada um segue os cursos do <b>seu departamento</b>. A barra de progresso reflete os cursos da Fase 1 e os do teu departamento.</div>
+
+  <div class="progress-card">
+    <div class="progress-info">
+      <p class="progress-label">O teu progresso</p>
+      <p class="progress-text" id="progressText">0 de 0 cursos concluídos</p>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-fase="all">Tudo</div>
+    <div class="tab" data-fase="1">Fase 1</div>
+    <div class="tab" data-fase="2">Fase 2</div>
+    <div class="tab" data-fase="3">Fase 3</div>
+    <div class="tab" data-fase="4">Fase 4</div>
+  </div>
+
+  <div class="fase fase-1" data-fase="1">
+    <div class="fase-head">
+      <div class="fase-num">1</div>
+      <div>
+        <p class="fase-title">Fundamentos comuns</p>
+        <p class="fase-sub">Para toda a equipa</p>
+      </div>
+      <div class="fase-pill">Semanas 1–2</div>
+    </div>
+    <p class="fase-desc">Alinhar vocabulário, princípios de IA generativa e técnicas de prompting. Mesmos cursos para todos os departamentos.</p>
+    <p class="section-divider">Cursos</p>
+    <div id="cursos-fase1"></div>
+  </div>
+
+  <div class="fase fase-2" data-fase="2">
+    <div class="fase-head">
+      <div class="fase-num">2</div>
+      <div>
+        <p class="fase-title">Especialização por departamento</p>
+        <p class="fase-sub">Escolhe o teu departamento abaixo</p>
+      </div>
+      <div class="fase-pill">Semanas 3–6</div>
+    </div>
+    <p class="fase-desc">Cada colaborador segue o percurso do seu departamento.</p>
+    <p class="section-divider">Departamento</p>
+    <div class="dept-bar" id="deptBar">
+      <div class="dept-btn" data-d="A">Produção</div>
+      <div class="dept-btn" data-d="B">Design Gráfico</div>
+      <div class="dept-btn" data-d="C">Pós-produção</div>
+      <div class="dept-btn" data-d="D">Estúdios</div>
+    </div>
+    <div id="deptContent"></div>
+  </div>
+
+  <div class="fase fase-3" data-fase="3">
+    <div class="fase-head">
+      <div class="fase-num">4</div>
+      <div>
+        <p class="fase-title">Governança e continuidade</p>
+        <p class="fase-sub">Para toda a equipa</p>
+      </div>
+      <div class="fase-pill">Semanas 9–10</div>
+    </div>
+    <p class="fase-desc">Redação coletiva da política interna de IA: o que pode e não pode ser gerado, transparência com cliente, direitos de autor, dados confidenciais e créditos.</p>
+    <p class="section-divider">Cursos de apoio</p>
+    <div id="cursos-fase4"></div>
+  </div>
+
+  <div class="fase fase-4" data-fase="4">
+    <div class="fase-head">
+      <div class="fase-num">3</div>
+      <div>
+        <p class="fase-title">Projeto Final</p>
+        <p class="fase-sub">Por departamento</p>
+      </div>
+      <div class="fase-pill">Semanas 7–16</div>
+    </div>
+    <p class="fase-desc">Cada departamento implementa os seus projetos finais. As tarefas são editáveis, na medida em que podes adicionar, remover e marcar como concluídas. Atribui um responsável a cada projeto e etapa.</p>
+    <p class="section-divider">Departamento</p>
+    <div class="pf-bar" id="pfBar">
+      <div class="pf-btn active" data-pf="A">Produção</div>
+      <div class="pf-btn" data-pf="B">Design Gráfico</div>
+      <div class="pf-btn" data-pf="C">Pós-produção</div>
+      <div class="pf-btn" data-pf="D">Estúdios</div>
+    </div>
+    <div class="pf-content" id="pfContent"></div>
+  </div>
+
+  <div class="footer">
+    Universidade Europeia Online · Plano de formação em IA para produção audiovisual<br>
+    O teu progresso é guardado automaticamente. Atualizado em abril de 2026.
+  </div>
+</div>
+
+<!-- ===== Settings modal ===== -->
+<div class="modal-back" id="settingsModal">
+  <div class="modal">
+    <h2>Alterar identificação</h2>
+    <div class="field">
+      <label for="editName">Nome</label>
+      <input type="text" id="editName" />
+    </div>
+    <div class="field">
+      <label for="editDept">Departamento</label>
+      <select id="editDept">
+        <option value="Produção">Produção</option>
+        <option value="Design Gráfico">Design Gráfico</option>
+        <option value="Pós-produção">Pós-produção de Vídeo e Grafismo</option>
+        <option value="Estúdios">Estúdios</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button id="cancelEdit">Cancelar</button>
+      <button class="primary" id="saveEdit">Guardar</button>
+    </div>
+    <a class="danger-link" id="logoutLink">Sair e mudar de utilizador</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var LOGO_SRC = "data:image/png;base64,"
+    + "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"
+    + "wYin9RmI1MaKkWPbNrZt89///d/qyCOPpLm5mWKxaML+m2++OWeddZZRziMyIv9pMmJKjsh/tJTLZdLp"
+    + "NBdeeKH66U9/qh977DE++ugjdt99d1ZbbTUFUCqVDCVhnEFrpJzi04sgh+PlWDKvP/jBD9RBBx2k77nn"
+    + "Hvr6+th8882ZPHmygqH7NiIj8p8mI0p3RP6jRTZu27YZM2aM2m+//cyGvrha3Dh6dUQ+vQjtIjSigcvl"
+    + "srCDqQMOOKDhXvT09OiOjg4lCntERuQ/SUbCyyPyHy/VatWURAVBYBSxlDplMpmGMgtYtBnEiPx7kkwm"
+    + "G0rVJE+eSqUIw5CmpibDDyxUjKJwR3LqI/KfKCOe7oh8riLgGCEbELacq6++Wvf395vynGw2y+DgIOl0"
+    + "2rBhzZ07V//f//0fd911F729vVQqFSzLorm5mW984xtsu+227LbbbsYjipMZxDf4V199VT/wwAPkcjlK"
+    + "pZLpdqSUYsqUKWy22WYK4I9//KMOw5B8Pm9yj+KBtbe3s++++6q4tybEDnEyjXnz5umbb77ZcDqn02nT"
+    + "2aWpqYnJkyez/vrrG+0uPMO2bfP222/rZ599lnvuuYd77rnHnEfynltvvTU77bQTe+yxh4KovlVQv8Kt"
+    + "rZSiUqmQSqV45pln9JNPPglg5t91XfL5PDvttBNrrLGG6u7u1hdccAE333wz1WqVcrmMbdtst912XHXV"
+    + "VSp+bQALFizQt99+O0899RS33HILlmUZxeo4DmPGjGHSpElsu+22bLvttnR1dRm2L6kTrVarFAoF/ec/"
+    + "/xnAUDDKGLfaais23njjxYYbpCmF67qUSiWmT5+ub7/9doRoQ9ICa621FpMnT+b73/8+48ePV9JooVQq"
+    + "GZYmucdaa0MME28/KfMpY+vv79d/+9vfuOGGG3jrrbdMnXGtVmO99dZj8803N+cLgoDf/e53WrpbCc+5"
+    + "HPPoo49Wce9eMARCfSl0qbfccou+7777uP/+++nv7zcdm1ZccUWmTJnCfvvtx0YbbaSCICCVSlGr1chk"
+    + "MobaUilFX1+fubY4vWacnEZC///4xz/0HXfcwYsvvshLL71EtVolm81SLBaZMGEC22yzDZMnTzZrUL4r"
+    + "TSNkvcjxRmRRGVG6I/K5itDNiWIUisV77rkHYbDyPA/P8xg1ahS9vb2svfbaXH/99frXv/61qZsdNWqU"
+    + "2RCLxSJ33HEHt9xyC2eeeaa+9NJLmTx5shKaR1FismE+/fTTXHTRRfi+b0jfRSmfcMIJbLbZZlQqFebM"
+    + "mcO5555LV1eXaeSQSqUol8usuOKK7LrrrmSzWcNnPbxBRCqVYtq0adxyyy3Ytm0IH4SAoVwu093drYZ7"
+    + "fAsXLtSnn346d955J/39/TiOQ2trK4VCgWQySW9vL01NTTz88MP8/e9/54wzztDHHXcchxxyiJIetHJt"
+    + "iUTCMC49/PDDnH/++eaay+Uyvu/T1taGZVl89NFH+vDDD0dYmhzHMYaJ0HiKgqvVapx55pn6mmuuIZ/P"
+    + "G3Yv13UJgoBarUYQBHR3dzN79mzuuecestksU6dO1YcffjirrbaaUeDJZJInn3ySiy++2BhlwtHd3NyM"
+    + "ZVmsueaaZLPZRbpkSX311VdfrU899VRjRElv3CAIqFarvPjii7z88stcfvnl/PCHP9QnnXSS+vjjjw3V"
+    + "pKzHUqmE67qL8EMXCgXS6bQxqv70pz/pc845h3w+Ty6XM3Mg3OPvvvsu7777Lr///e/50Y9+pE877TR1"
+    + "1llnNdCiSmSlra2NAw44QLe2tiqZXzHwBF9w11136XPOOYe3337brDNR3OVymTfffJOPPvqI6667jq22"
+    + "2kpfeumlhGGI0Lo2NzebVptjxoyhVCrhOI5Zi8NTKE8//bS+6KKLePLJJ43B6DgOyWQS3/dpampizpw5"
+    + "XH755Vx//fWcddZZ+uyzz+bb3/62ipOKiPEygof4ZBkJL4/I5yrJZNJ4ofFwoWyOWmuampoMK5Hnefz2"
+    + "t7/lt7/9LVprstks2WyWhQsXNljs/f39ZDIZFixYwHbbbcctt9yixdqXTRUwbeLK5TKWZeG6Lr7vUy6X"
+    + "jaIAyGQyHHLIIYwdO5a+vj4WLlxIOp02tJhz5szh8ccf16LcxEORzUuYtp566iny+TwQeXDZbJZEIkEy"
+    + "meTYY4813xGv7rbbbtNbb701N910k/HCRBlYlkU+nzebZi6XM5zRp556Kv/1X/+lZ8yYoQETQYg3gM9m"
+    + "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"
+    + "I4/oV199VZ911ll6m2224d133zVNDpYkAgCbOnWqUfLVapWmpibmz59v0PzHH388hxxyiL711lv1888/"
+    + "r5988kl96aWX6p122klfcsklJscfJ6oQr1d+ljW7yy67qFGjRpnrXbBgARAZI2+88QYHHHAAb731VoOh"
+    + "VSwWSSQSfPDBB3rLLbfU9913H4cffji77767fuONN3QcXxCvShiRRcURRqgopaoi/JQyzhimjheifCeR"
+    + "4jSOqROAExKqIMoNY2GrCAVlQqjDa4C1VaeBFHCOrhNIqIiKsV665FtQdUKqDlQdHxwf7ABsB235hARY"
+    + "KkCpmsaBfMqhkHJZZ7Mp8M1tIZsDu0XlS+hUJro4zwPHqeI4Hk6yBv1zNM+/zOA//sHcN94kmL+QRKVG"
+    + "EheVyNCjFe1rr8MKu+6k2WQTcFAkXAIrQSXU2Dri7lCWS6CUstubNf+1LZnHnqH47odY1QJpFeJqbWwS"
+    + "y1NYlkJb1jIJMQ+XOGr4+OOPFySuAad0dnYyf/58Y8HXajXmzZvHggULTH5SrGThYE0kEoajtqenh2w2"
+    + "yy9+8QtWW201JRtcHH0ZB518mUXKlP77v/+b3/zmNwZUIpujeMmSZ+vs7GSPPfZQcdBXPA8GcOSRR3LT"
+    + "TTfR29sLwMKFC+ns7KRcLjNnzhx+9atf8X//93/6W9/6FiuttBIQ5SSfeOIJEx0oFAp0dnZy8MEH8/Wv"
+    + "f12fdtppDV2MmpqalkjMAEP3YnhOUmqBb7jhBnK5HE899RQ77bQT66+/vt5rr73YcMMN2WSTTRRgSmqu"
+    + "ueYafeuttxpO376+PsIwpLW1lYULF9LV1WU25DhT1pJEa83hhx/OaaedRq1WM4rXcRxDzJJMJrn11luZ"
+    + "Pn06YRiaRvNyTYODg0ZBS+hTUhsyBikZSyQSnHDCCRx66KGEYcjo0aMpFossXLiQ5ZdfnlKpRHNzMzfe"
+    + "eCM33HBDA8OaANja2toYGBhYKm8+kUhw5JFHcuWVV1KtVsnlcgRBYHLL48aNo7+/nzvuuIN7773XeLFi"
+    + "GHd0dJhSoVwux4IFC2hrazPedryOXu75T37yE4477jggwidITl4pxfPPP88WW2zBBhtsoHfbbTeKxSLV"
+    + "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"
+  ;
+
+  var l = document.getElementById('loginLogo'); if (l) l.src = LOGO_SRC;
+  var t = document.getElementById('topbarLogo'); if (t) t.src = LOGO_SRC;
+
+
+
+
+
+
+  /* ===================================================
+     PROJETO FINAL — dados, render, tarefas editáveis
+     =================================================== */
+  var PF_KEY = 'ue_pf_v2';
+  var pfState = {};
+  try { var _pfs = localStorage.getItem(PF_KEY); if(_pfs) pfState = JSON.parse(_pfs); } catch(e){}
+  function savePF(){ try{ localStorage.setItem(PF_KEY, JSON.stringify(pfState)); }catch(e){} }
+
+  // Responsáveis guardados separadamente (não afectam progress)
+  var PF_RESP_KEY = 'ue_pf_resp_v2';
+  var pfResp = {};
+  try { var _pfr = localStorage.getItem(PF_RESP_KEY); if(_pfr) pfResp = JSON.parse(_pfr); } catch(e){}
+  function savePFResp(){ try{ localStorage.setItem(PF_RESP_KEY, JSON.stringify(pfResp)); }catch(e){} }
+
+  // Tarefas extras adicionadas pelo utilizador
+  var PF_EXTRA_KEY = 'ue_pf_extra_v2';
+  var pfExtra = {};
+  try { var _pfe = localStorage.getItem(PF_EXTRA_KEY); if(_pfe) pfExtra = JSON.parse(_pfe); } catch(e){}
+  function savePFExtra(){ try{ localStorage.setItem(PF_EXTRA_KEY, JSON.stringify(pfExtra)); }catch(e){} }
+
+  var TICK_SVG = '<svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="white" stroke-width="1.8" stroke-linecap="square"/></svg>';
+
+  // ── Estrutura de dados ─────────────────────────────────────────────────────
+  // main = projeto principal, subs = subprojectos
+  // etapas = [{label, semanas, tarefas:[]}]
+  var pfData = {
+    A: { nome: 'Produção', projs: [
+      { id:'a-hub', nome:'Hub', desc:'Projeto central de automatização e gestão da Produção.', subs:[
+        { id:'a-hub-manuais', nome:'Central de Manuais',
+          desc:'Agente Claude com todos os manuais internos — qualquer elemento pergunta em linguagem natural, em qualquer departamento.',
+          etapas:[
+            { label:'Etapa 1 — Base de conhecimento', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Personalização e memória', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+      ]},
+      { id:'a-agenda', nome:'Gestão de Agenda',
+        desc:'App Claude completa para professores agendarem slots de gravação com regras de tipologia, confirmação por Produção, agendamento automático no Outlook dos Estúdios e folhas de serviço diárias na véspera.',
+        subs:[],
+        etapas:[
+          { label:'Etapa 1 — Ligação Airtable → App', semanas:'Sem. 1–2', tarefas:[]},
+          { label:'Etapa 2 — Interface de agenda e slots', semanas:'Sem. 3–5', tarefas:[]},
+          { label:'Etapa 3 — Confirmação e Outlook', semanas:'Sem. 6–7', tarefas:[]},
+          { label:'Etapa 4 — Folhas de serviço automáticas', semanas:'Sem. 8–9', tarefas:[]},
+          { label:'Etapa 5 — Editabilidade ao longo do tempo', semanas:'Sem. 10', tarefas:[]},
+        ]
+      },
+    ]},
+    B: { nome: 'Design Gráfico', projs: [
+      { id:'b-hub', nome:'Hub', desc:'Projeto central de automatização criativa do Design Gráfico.', subs:[
+        { id:'b-revisao', nome:'Revisão de Leituras & Vídeos',
+          desc:'Hub centralizado de revisão com agentes IA — relatório automático em 2 min por UC.',
+          etapas:[
+            { label:'Etapa 1 — Unificação do hub', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Melhoria e escala', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+        { id:'b-imagens', nome:'Download de Imagens & Gráficos Automáticos para Guiões',
+          desc:'Do guião aos assets em segundos — imagens Stock descarregadas, em falta geradas com IA, gráficos criados com prompts padronizados.',
+          etapas:[
+            { label:'Etapa 1 — Pipeline de imagens', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Gráficos automáticos', semanas:'Sem. 3', tarefas:[]},
+          ]
+        },
+        { id:'b-manuais', nome:'Central de Manuais',
+          desc:'Ver Central de Manuais em Produção — versão especializada para Design Gráfico.',
+          etapas:[
+            { label:'Configuração para Design Gráfico', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+        { id:'b-pdf', nome:'Índice Interativo em PDF & Deteção e Automação de Links',
+          desc:'PDFs estáticos transformados em documentos navegáveis — índice clicável, links ativos, pacote InDesign exportado automaticamente.',
+          etapas:[
+            { label:'Etapa 1 — Links e índice automáticos', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Montagem e exportação automática', semanas:'Sem. 3', tarefas:[]},
+          ]
+        },
+      ]},
+    ]},
+    C: { nome: 'Pós-produção', projs: [
+      { id:'c-hub', nome:'Hub', desc:'Projeto central de automatização da Pós-produção de Vídeo e Grafismo.', subs:[
+        { id:'c-revisao', nome:'Revisão de Leituras & Vídeos',
+          desc:'Hub centralizado de revisão com agentes IA — relatório automático em 2 min por UC.',
+          etapas:[
+            { label:'Etapa 1 — Unificação do hub', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Melhoria e escala', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+        { id:'c-imagens', nome:'Download de Imagens & Gráficos Automáticos para Guiões',
+          desc:'Do guião aos assets em segundos — imagens Stock descarregadas e gráficos criados automaticamente.',
+          etapas:[
+            { label:'Etapa 1 — Pipeline de imagens', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Gráficos automáticos', semanas:'Sem. 3', tarefas:[]},
+          ]
+        },
+        { id:'c-manuais', nome:'Central de Manuais',
+          desc:'Versão especializada para Pós-produção — normas técnicas, workflows e templates de edição.',
+          etapas:[
+            { label:'Configuração para Pós-produção', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+        { id:'c-leituras', nome:'Guiões de Leituras Animadas',
+          desc:'Brief → guião completo + storyboard visual gerado com Claude e Runway em minutos.',
+          etapas:[
+            { label:'Etapa 1 — Pipeline de guião', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Integração e consistência', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+        { id:'c-motion', nome:'Motion Graphics Animados com IA (Runway)',
+          desc:'Sticker Adobe Stock → animação HD com normas IPAM via Seedance 2.0 e Runway.',
+          etapas:[
+            { label:'Etapa 1 — Padronização do workflow', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Integração no pipeline de entrega', semanas:'Sem. 3', tarefas:[]},
+          ]
+        },
+      ]},
+    ]},
+    D: { nome: 'Estúdios', projs: [
+      { id:'d-hub', nome:'Hub', desc:'Projeto central de automatização de Estúdios.', subs:[
+        { id:'d-hub-manuais', nome:'Central de Manuais',
+          desc:'Versão especializada para Estúdios',
+          etapas:[
+            { label:'Etapa 1 — Base de conhecimento', semanas:'Sem. 1–2', tarefas:[]},
+            { label:'Etapa 2 — Personalização e memória', semanas:'Sem. 3–4', tarefas:[]},
+          ]
+        },
+        { id:'d-canvas', nome:'Automatização dos Carregamentos (Airtable → Canvas LMS)',
+          desc:'Upload automático de objetos de aprendizagem para o Canvas LMS quando a UC é marcada como pronta.',
+          etapas:[
+            { label:'Etapa 1 — Integração Airtable → Canvas', semanas:'Sem. 1–3', tarefas:[]},
+            { label:'Etapa 2 — Automatização e monitorização', semanas:'Sem. 4–6', tarefas:[]},
+          ]
+        },
+      ]},
+    ]},
+  };
+
+  var deptToPF = { 'Produção':'A', 'Design Gráfico':'B', 'Pós-produção':'C', 'Estúdios':'D' };
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function getExtraTasks(id){ return pfExtra[id] || []; }
+
+  function getAllPFIds(){
+    var ids = [];
+    Object.keys(pfData).forEach(function(dept){
+      pfData[dept].projs.forEach(function(proj){
+        var processProj = function(p){
+          p.etapas && p.etapas.forEach(function(etapa, ei){
+            etapa.tarefas.forEach(function(_, ti){
+              ids.push(p.id + '-' + ei + '-' + ti);
+            });
+            getExtraTasks(p.id + '-' + ei).forEach(function(_, ti){
+              ids.push(p.id + '-extra-' + ei + '-' + ti);
+            });
+          });
+        };
+        processProj(proj);
+        proj.subs && proj.subs.forEach(processProj);
+      });
+    });
+    return ids;
+  }
+
+
+  // ── Tag-input responsible (escreve + Enter = label) ────────────────────
+  function getSelResp(rid){ return (pfResp[rid]||'').split(',').map(function(n){return n.trim();}).filter(Boolean); }
+  function setSelResp(rid, arr){ pfResp[rid] = arr.join(','); savePFResp(); }
+
+  function renderRespSelect(rid){
+    var selected = getSelResp(rid);
+    var inputId = 'ri-' + rid.replace(/[^a-z0-9]/gi,'-');
+    var chips = selected.map(function(n, i){
+      return '<span class="pf-resp-chip">' + esc(n)
+        + '<button class="pf-resp-chip-del" data-rid="' + rid + '" data-idx="' + i + '" tabindex="-1">×</button>'
+        + '</span>';
+    }).join('');
+    var ph = selected.length ? '' : '<span class="pf-resp-placeholder">nome + Enter</span>';
+    return '<div class="pf-resp-wrap" onclick="var i=document.getElementById(\'' + inputId + '\');if(i)i.focus()">'
+      + chips + ph
+      + '<input class="pf-resp-input" id="' + inputId + '" data-rid="' + rid + '" autocomplete="off">'
+      + '</div>';
+  }
+
+  // Enter adds tag; Backspace on empty removes last
+  document.addEventListener('keydown', function(e){
+    if (!e.target.classList.contains('pf-resp-input')) return;
+    var rid = e.target.dataset.rid;
+    if (e.key === 'Enter'){
+      e.preventDefault();
+      var val = e.target.value.trim();
+      if (!val) return;
+      var sel = getSelResp(rid);
+      if (sel.indexOf(val) < 0) sel.push(val);
+      setSelResp(rid, sel);
+      var wrap = e.target.closest('.pf-resp-wrap');
+      if (wrap){ wrap.outerHTML = renderRespSelect(rid); }
+      setTimeout(function(){ var ni = document.getElementById('ri-' + rid.replace(/[^a-z0-9]/gi,'-')); if(ni) ni.focus(); }, 0);
+    } else if (e.key === 'Backspace' && e.target.value === ''){
+      var sel = getSelResp(rid);
+      if (sel.length){ sel.pop(); setSelResp(rid, sel); }
+      var wrap = e.target.closest('.pf-resp-wrap');
+      if (wrap){ wrap.outerHTML = renderRespSelect(rid); }
+      setTimeout(function(){ var ni = document.getElementById('ri-' + rid.replace(/[^a-z0-9]/gi,'-')); if(ni) ni.focus(); }, 0);
+    }
+  });
+
+  // × removes tag
+  document.addEventListener('click', function(e){
+    var del = e.target.closest('.pf-resp-chip-del');
+    if (del){
+      e.stopPropagation();
+      var rid = del.dataset.rid;
+      var idx = parseInt(del.dataset.idx, 10);
+      var sel = getSelResp(rid);
+      sel.splice(idx, 1);
+      setSelResp(rid, sel);
+      var wrap = del.closest('.pf-resp-wrap');
+      if (wrap){ wrap.outerHTML = renderRespSelect(rid); }
+    }
+  });
+
+  function renderEtapas(proj, indent){
+    var html = '';
+    if (!proj.etapas || !proj.etapas.length) return html;
+    proj.etapas.forEach(function(etapa, ei){
+      var etapaRespId = proj.id + '-etapa-' + ei;
+      var etapaRespVal = pfResp[etapaRespId] || '';
+      html += '<div class="etapa-hd">'
+        + '<div class="etapa-hd-left">'
+        + '<span class="etapa-name">' + esc(etapa.label) + '</span>'
+        + '<span class="etapa-weeks">' + esc(etapa.semanas) + '</span>'
+        + '</div>'
+        + '<div class="etapa-resp-wrap">'
+        + '<span class="pf-resp-label">Responsável&nbsp;</span>'
+        + renderRespSelect(etapaRespId)
+        + '</div></div>';
+      // Base tasks
+      etapa.tarefas.forEach(function(tarefa, ti){
+        var tid = proj.id + '-' + ei + '-' + ti;
+        var done = pfState[tid] ? ' done' : '';
+        html += '<div class="task-row' + done + '" data-tid="' + tid + '">'
+          + '<div class="task-chk-sq">' + TICK_SVG + '</div>'
+          + '<span class="task-lbl">' + esc(tarefa) + '</span>'
+          + '</div>';
+      });
+      // Extra tasks
+      var extras = getExtraTasks(proj.id + '-' + ei);
+      extras.forEach(function(tarefa, ti){
+        var tid = proj.id + '-extra-' + ei + '-' + ti;
+        var done = pfState[tid] ? ' done' : '';
+        html += '<div class="task-row' + done + '" data-tid="' + tid + '">'
+          + '<div class="task-chk-sq">' + TICK_SVG + '</div>'
+          + '<span class="task-lbl">' + esc(tarefa) + '</span>'
+          + '<button class="task-del" data-del="' + esc(proj.id + '-' + ei) + '" data-deli="' + ti + '" title="Remover">×</button>'
+          + '</div>';
+      });
+      // Add task row
+      var addId = 'add-' + proj.id + '-' + ei;
+      html += '<div class="add-task-row">'
+        + '<input class="add-task-input" id="' + addId + '" placeholder="+ Adicionar tarefa...">'
+        + '<button class="add-task-btn" data-addfor="' + proj.id + '-' + ei + '" data-inputid="' + addId + '">Adicionar</button>'
+        + '</div>';
+    });
+    return html;
+  }
+
+  function renderProjBlock(proj, isTop){
+    var respId = proj.id + '-resp';
+    var respVal = pfResp[respId] || '';
+    var html = '<div class="pf-main">';
+    // Header
+    html += '<div class="pf-main-head">'
+      + '<p class="pf-main-name">' + esc(proj.nome) + '</p>'
+      + '<div class="pf-main-resp"><span class="pf-resp-label">Responsável&nbsp;</span>'
+      + renderRespSelect(respId)
+      + '</div>'
+      + '</div>';
+    if (proj.desc) html += '<p class="pf-main-desc">' + esc(proj.desc) + '</p>';
+    // Etapas diretas do projeto (Gestão de Agenda, Canvas)
+    if (proj.etapas && proj.etapas.length) html += renderEtapas(proj, false);
+    // Subprojectos
+    if (proj.subs && proj.subs.length){
+      html += '<div class="pf-sub-list">';
+      proj.subs.forEach(function(sub){
+        var subRespId = sub.id + '-resp';
+        var subRespVal = pfResp[subRespId] || '';
+        html += '<div class="pf-sub">'
+          + '<div class="pf-sub-head">'
+          + '<p class="pf-sub-name">↳ ' + esc(sub.nome) + '</p>'
+          + '<div class="pf-main-resp"><span class="pf-resp-label">Responsável&nbsp;</span>'
+          + renderRespSelect(subRespId)
+          + '</div>'
+          + '</div>';
+        if (sub.desc) html += '<p class="pf-main-desc">' + esc(sub.desc) + '</p>';
+        html += renderEtapas(sub, true);
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function renderPF(dept){
+    var data = pfData[dept];
+    var html = '';
+    data.projs.forEach(function(proj, i){
+      if (i > 0) html += '<hr class="pf-divider">';
+      html += renderProjBlock(proj, true);
+    });
+    document.getElementById('pfContent').innerHTML = html;
+    updateProgress();
+  }
+
+  // ── Event delegation ───────────────────────────────────────────────────────
+  document.addEventListener('click', function(e){
+    // Dept bar
+    var pfBtn = e.target.closest('#pfBar .pf-btn');
+    if (pfBtn){
+      document.querySelectorAll('#pfBar .pf-btn').forEach(function(b){ b.classList.remove('active'); });
+      pfBtn.classList.add('active');
+      renderPF(pfBtn.dataset.pf);
+      return;
+    }
+    // Task toggle
+    var taskRow = e.target.closest('.task-row');
+    if (taskRow && !e.target.classList.contains('task-del')){
+      var tid = taskRow.dataset.tid;
+      if (!tid) return;
+      if (pfState[tid]){ delete pfState[tid]; taskRow.classList.remove('done'); }
+      else { pfState[tid] = true; taskRow.classList.add('done'); }
+      savePF(); updateProgress();
+      if (isOnlineMode() && state.user) syncToServer('pf-'+tid, !!pfState[tid]);
+      return;
+    }
+    // Delete extra task
+    var delBtn = e.target.closest('.task-del');
+    if (delBtn){
+      var key = delBtn.dataset.del;
+      var idx = parseInt(delBtn.dataset.deli, 10);
+      if (!pfExtra[key]) return;
+      pfExtra[key].splice(idx, 1);
+      savePFExtra();
+      var activeBtn = document.querySelector('#pfBar .pf-btn.active');
+      if (activeBtn) renderPF(activeBtn.dataset.pf);
+      return;
+    }
+    // Add task button
+    var addBtn = e.target.closest('.add-task-btn');
+    if (addBtn){
+      var key = addBtn.dataset.addfor;
+      var inputId = addBtn.dataset.inputid;
+      var input = document.getElementById(inputId);
+      if (!input || !input.value.trim()) return;
+      if (!pfExtra[key]) pfExtra[key] = [];
+      pfExtra[key].push(input.value.trim());
+      savePFExtra();
+      var activeBtn = document.querySelector('#pfBar .pf-btn.active');
+      if (activeBtn) renderPF(activeBtn.dataset.pf);
+      return;
+    }
+  });
+
+  // Enter key on add-task inputs
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && e.target.classList.contains('add-task-input')){
+      var row = e.target.closest('.add-task-row');
+      if (row) { var btn = row.querySelector('.add-task-btn'); if(btn) btn.click(); }
+    }
+  });
+
+  // Responsável handled via renderRespSelect
+
+
+
+
+
+  // ── merged from second script ──
+
+  /* =========================================================
+     CONFIG — coloca aqui o URL do Google Apps Script
+     Vê o GUIA_INSTALACAO.md (passo 4) para obter este URL.
+     Enquanto não preencheres, a app funciona offline.
+     ========================================================= */
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbystm8VMYG6stsMlZrtMI323Wl0qk8ZtlzQ3C8-YwVhIwDLHlfb4AWV3kWyvzyGAPSo/exec";
+
+  var STORAGE_KEY = 'ue_plano_ia_v1';
+  var USER_KEY = 'ue_plano_ia_user_v1';
+  var CHECK_SVG = '<svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5L4.5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  // Department codes for fase 2
+  var deptToCode = {
+    'Produção':'A',
+    'Design Gráfico':'B',
+    'Pós-produção':'C',
+    'Estúdios':'D'
+  };
+
+  var fase1 = [
+    ["f1-1","AI Fluency: Framework & Foundations","Anthropic · ~3h · framework dos 4Ds, com certificado","https://anthropic.skilljar.com/ai-fluency-framework-foundations"],
+    ["f1-2","Prompt Engineering Interactive Tutorial","Anthropic · ~5h · 9 capítulos hands-on no GitHub","https://github.com/anthropics/courses/tree/master/prompt_engineering_interactive_tutorial"],
+    ["f1-3","The Only AI Tools You Need (12-Minute Guide)","Jeff Su · ~12 min · quando usar ChatGPT, Gemini, Claude, Perplexity e NotebookLM","https://www.youtube.com/watch?v=htZRCE2GgIs"]
+  ];
+
+  var fase4 = [
+    ["f4-1","Introdução à IA Responsável","Google Cloud Skills Boost · ~1h","https://www.cloudskillsboost.google/course_templates/554"],
+    ["f4-2","AI & Ethics: Responsible AI","Microsoft Learn · ~45 min sem login","https://learn.microsoft.com/en-us/training/modules/responsible-ai-principles/"]
+  ];
+
+  var deptData = {
+    A: {
+      nome:"Produção",
+      foco:"Gestão de projetos, comunicação, breakdowns, follow-ups e atas de reunião.",
+      cursos:[
+        ["A-1","Claude 101","Anthropic · ~1h · conversação eficaz para tarefas de produção e coordenação","https://anthropic.skilljar.com/claude-101"],
+        ["A-2","Introduction to Claude Cowork","Anthropic · ~2h · gerir ficheiros, briefings e agendas com IA","https://anthropic.skilljar.com/introduction-to-claude-cowork"],
+        ["A-3","Power Automate — Automatizar processos de negócio","Microsoft Learn · ~3h · em PT · automação de fluxos e folhas de serviço","https://learn.microsoft.com/pt-pt/training/paths/automate-process-power-automate/"],
+        ["A-4","Introdução ao Power Automate com Copilot","Microsoft Learn · ~1h · criar fluxos com IA","https://learn.microsoft.com/en-us/training/modules/introduction-power-automate/"]
+      ],
+      aplicacao:[
+        "Modelos de email para diferentes fases de produção",
+        "Gestão de ficheiros e agenda",
+        "Resumos automáticos de reuniões com extração de tarefas",
+        "Introdução ao Power Automate"
+      ]
+    },
+    B: {
+      nome:"Design Gráfico",
+      foco:"Visual, mood boards, concept art, lower thirds, branding e adaptações multi-formato.",
+      cursos:[
+        ["B-1","Adobe Firefly — tutoriais oficiais","Adobe Help · ~3h · Generative Fill, Text to Image, Vector","https://helpx.adobe.com/firefly/get-set-up/learn-the-basics/firefly-tutorials.html"],
+        ["B-2","Runway Academy — Workflows criativos e imagem","Runway · ~3h · workflows, geração de imagem, produção criativa","https://academy.runwayml.com/courses"],
+        ["B-3","Adobe MAX — Automatização e IA no InDesign","Adobe · ~27 min · Auto Style, Generative Expand, Text to Image em InDesign","https://www.adobe.com/max/2024/sessions/na-techniques-to-maximize-automation-and-ai-tools-os311.html"],
+        ["B-4","Adobe Firefly — Tutoriais completos (Experience League)","Adobe · tutoriais oficiais de Text to Image, Generative Fill, Recolor e Shape Fill","https://experienceleague.adobe.com/en/docs/creative-cloud-enterprise-learn/cce-learning-hub/fireflyoverview/firefly-tutorials/overview"]
+      ],
+      aplicacao:[
+        "Mood boards e referências visuais",
+        "Workflows e geração de imagem",
+        "Lower thirds e grafismos base com Firefly",
+        "Text to Image, Generative Fill, Recolor e Shape Fill"
+      ]
+    },
+    C: {
+      nome:"Pós-produção de Vídeo e Grafismo",
+      foco:"Transformação de vídeo, motion capture, extensão de clips, limpeza de áudio, geração de voz e SFX.",
+      cursos:[
+        ["C-1","Runway Academy — Aleph (transformação de vídeo)","Runway · ~2h · mudar ambiente, adicionar elementos, gerar novos ângulos","https://academy.runwayml.com/course/video-magic-aleph"],
+        ["C-2","Runway Academy — Act-Two (motion capture)","Runway · ~2h · performance facial e corporal em personagens","https://academy.runwayml.com/courses/act-two"],
+        ["C-3","Runway Academy — Prompting Guide","Runway · ~1h · descrever motion, câmara e progressão temporal para gerar vídeo","https://academy.runwayml.com/guides/prompting-guide"],
+        ["C-4","ElevenLabs — Documentação e guias","ElevenLabs · ~2h · voz, SFX, dobragem","https://elevenlabs.io/docs"],
+        ["C-5","Working with AI in Adobe Premiere Pro","Adobe Help · ~2h · Generative Extend, Enhance Speech, text-based editing","https://helpx.adobe.com/premiere/desktop/whats-new/whats-new.html"]
+      ],
+      aplicacao:[
+        "Transformação de cenas existentes (ambiente, iluminação, estilo com Aleph)",
+        "Performance facial/corporal em personagens gerados",
+        "Extensão de clips curtos e text-based editing",
+        "Dobragem multilíngue mantendo a voz original",
+        "Geração de SFX a partir de descrição"
+      ]
+    },
+    D: {
+      nome:"Estúdios",
+      foco:"Automatização de carregamentos para o Canvas LMS, organização de media no NAS, markers de set e consulta de manuais técnicos com IA.",
+      cursos:[
+        ["D-1","Claude 101","Anthropic · ~1h · consulta de manuais técnicos, checklists de set e cálculos","https://anthropic.skilljar.com/claude-101"],
+        ["D-2","Introduction to Claude Cowork","Anthropic · ~2h · organizar shootlogs, briefings e documentação técnica com IA","https://anthropic.skilljar.com/introduction-to-claude-cowork"],
+        ["D-3","Runway Academy — Camera Control","Runway · ~2h · pans, tilts, zooms e movimentos de câmara para pré-visualização de planos","https://academy.runwayml.com/gen3-alpha/gen3-alpha-camera-control"],
+        ["D-4","Airtable Academy — Introdução ao Airtable","Airtable · ~2h · bases de dados, campos, automações e integrações","https://academy.airtable.com/path/introduction-to-airtable"],
+        ["D-5","Canvas LMS — Instructor Getting Started","Canvas · ~2h · estrutura do LMS, módulos, publicação de conteúdos","https://community.canvaslms.com/t5/Canvas-Basics-Guide/ct-p/basics"]
+      ],
+      aplicacao:[
+        "Upload automático de UCs para o Canvas LMS via Airtable",
+        "Consulta de manuais técnicos de câmara e normas de set com Claude",
+        "Geração de checklists pré-set personalizadas por tipologia",
+        "Organização automática de ficheiros de gravação no NAS",
+        "Shootlog gerado automaticamente a partir dos metadados Airtable"
+      ]
+    }
+  };
+
+  /* ===== State ===== */
+  var state = { user:null, progress:{}, currentDept:'A' };
+
+  function loadUser(){
+    try {
+      var raw = localStorage.getItem(USER_KEY);
+      if (raw) state.user = JSON.parse(raw);
+    } catch(e){}
+  }
+  function saveUser(){
+    try { localStorage.setItem(USER_KEY, JSON.stringify(state.user)); } catch(e){}
+  }
+  function loadProgress(){
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) state.progress = JSON.parse(raw);
+    } catch(e){ state.progress = {}; }
+  }
+  function saveLocalProgress(){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress)); } catch(e){}
+  }
+
+  /* ===== Sync to Google Sheets ===== */
+  function isOnlineMode(){ return APPS_SCRIPT_URL && APPS_SCRIPT_URL.indexOf('http') === 0; }
+
+  function syncToServer(courseId, isDone){
+    if (!isOnlineMode() || !state.user) return Promise.resolve({ok:false, reason:'offline'});
+    var payload = {
+      action: 'update',
+      name: state.user.name,
+      dept: state.user.dept,
+      courseId: courseId,
+      done: isDone,
+      ts: new Date().toISOString()
+    };
+    // Apps Script web apps require text/plain to avoid CORS preflight
+    return fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      mode:'cors',
+      headers: { 'Content-Type':'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); })
+      .catch(function(err){ return {ok:false, error: String(err)}; });
+  }
+
+  function pingServer(){
+    if (!isOnlineMode()) return Promise.resolve({ok:false, mode:'offline'});
+    return fetch(APPS_SCRIPT_URL + '?action=ping', { method:'GET', mode:'cors' })
+      .then(function(r){ return r.json(); })
+      .catch(function(err){ return {ok:false, error:String(err)}; });
+  }
+
+  function updateSyncStatus(target){
+    var el = document.getElementById('syncStatusLogin');
+    var txt = document.getElementById('syncTextLogin');
+    if (!el || !txt) return;
+    if (!isOnlineMode()){
+      el.querySelector('.dot').className = 'dot warn';
+      txt.textContent = 'Modo local — o progresso é guardado neste browser.';
+      return;
+    }
+    txt.textContent = 'A verificar ligação ao servidor...';
+    el.querySelector('.dot').className = 'dot warn';
+    pingServer().then(function(res){
+      if (res && res.ok){
+        el.querySelector('.dot').className = 'dot';
+        txt.textContent = 'Ligação ao servidor estabelecida.';
+      } else {
+        el.querySelector('.dot').className = 'dot err';
+        txt.textContent = 'Sem ligação ao servidor — a usar modo local.';
+      }
+    });
+  }
+
+  /* ===== Toast ===== */
+  var toastTimer;
+  function showToast(msg, opts){
+    opts = opts || {};
+    var t = document.getElementById('toast');
+    var spinner = opts.loading ? '<span class="spinner"></span>' : '';
+    t.innerHTML = spinner + '<span>' + msg + '</span>';
+    t.className = 'toast show' + (opts.error ? ' error' : '');
+    clearTimeout(toastTimer);
+    if (!opts.persist) toastTimer = setTimeout(function(){ t.classList.remove('show'); }, opts.duration || 1800);
+  }
+
+  function hideToast(){
+    var t = document.getElementById('toast');
+    t.classList.remove('show');
+  }
+
+  /* ===== Render ===== */
+  function escapeHtml(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+  function renderCurso(c){
+    var done = state.progress[c[0]] ? ' done' : '';
+    return '<div class="curso-row'+done+'" data-id="'+c[0]+'">'
+      +'<button class="check-btn" aria-label="Marcar como concluído">'
+        +'<div class="check-square">'+CHECK_SVG+'</div>'
+      +'</button>'
+      +'<a class="curso-link" href="'+c[3]+'" target="_blank" rel="noopener">'
+        +'<div class="curso-body">'
+          +'<p class="curso-name">'+escapeHtml(c[1])+'</p>'
+          +'<p class="curso-meta">'+escapeHtml(c[2])+'</p>'
+        +'</div>'
+        +'<div class="curso-arrow">↗</div>'
+      +'</a>'
+    +'</div>';
+  }
+
+  function renderDept(d){
+    state.currentDept = d;
+    document.querySelectorAll('#deptBar .dept-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.d === d);
+    });
+    var data = deptData[d];
+    var html = '<p class="dept-foco">'+escapeHtml(data.foco)+'</p>';
+    html += '<p class="section-divider">Cursos</p>';
+    html += data.cursos.map(renderCurso).join('');
+    html += '<p class="section-divider">Aplicação prática</p><ul class="aplic-list">';
+    data.aplicacao.forEach(function(a){ html += '<li>'+escapeHtml(a)+'</li>'; });
+    html += '</ul>';
+    document.getElementById('deptContent').innerHTML = html;
+  }
+
+  function getAllCourseIds(){
+    var ids = [];
+    // Fase 1 — common to all
+    fase1.forEach(function(c){ ids.push(c[0]); });
+    // Fase 3 (Governança) — common to all
+    fase4.forEach(function(c){ ids.push(c[0]); });
+    // Fase 2 — only user's dept (or all if no user)
+    var userDept = state.user ? deptToCode[state.user.dept] : null;
+    if (userDept && deptData[userDept]) {
+      deptData[userDept].cursos.forEach(function(c){ ids.push(c[0]); });
+    } else {
+      Object.keys(deptData).forEach(function(d){
+        deptData[d].cursos.forEach(function(c){ ids.push(c[0]); });
+      });
+    }
+    // Projeto Final tasks
+    if (typeof getAllPFIds === 'function') {
+      ids = ids.concat(getAllPFIds());
+    }
+    return ids;
+  }
+
+  function updateProgress(){
+    var allIds = getAllCourseIds();
+    var doneCount = allIds.filter(function(id){ return state.progress[id]; }).length;
+    var total = allIds.length;
+    var pct = total > 0 ? Math.round((doneCount/total)*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('progressText').textContent = doneCount + ' de ' + total + ' cursos concluídos';
+  }
+
+  function renderHeader(){
+    if (!state.user) return;
+    var initials = state.user.name.split(/\s+/).slice(0,2).map(function(p){return p.charAt(0).toUpperCase()}).join('');
+    document.getElementById('userAvatar').textContent = initials || '?';
+    document.getElementById('userNameDisplay').textContent = state.user.name;
+    document.getElementById('userDeptDisplay').textContent = state.user.dept;
+  }
+
+  function autoSelectDept(){
+    if (!state.user) return;
+    var code = deptToCode[state.user.dept];
+    if (code && deptData[code]) renderDept(code);
+    else renderDept('A');
+  }
+
+  /* ===== Boot ===== */
+  function showApp(){
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('topbar').style.display = '';
+    document.getElementById('appContent').style.display = '';
+    renderHeader();
+    document.getElementById('cursos-fase1').innerHTML = fase1.map(renderCurso).join('');
+    document.getElementById('cursos-fase4').innerHTML = fase4.map(renderCurso).join('');
+    autoSelectDept();
+    updateProgress();
+    // Render Projeto Final section
+    var _pfUser = state.user && deptToPF[state.user.dept];
+    var _pfCode = _pfUser || 'A';
+    var _pfBtn = document.querySelector('#pfBar .pf-btn[data-pf="' + _pfCode + '"]');
+    if (_pfBtn) {
+      document.querySelectorAll('#pfBar .pf-btn').forEach(function(b){ b.classList.remove('active'); });
+      _pfBtn.classList.add('active');
+    }
+    if (document.getElementById('pfContent')) renderPF(_pfCode);
+  }
+
+  function showLogin(){
+    document.getElementById('loginOverlay').style.display = '';
+    document.getElementById('topbar').style.display = 'none';
+    document.getElementById('appContent').style.display = 'none';
+    if (state.user){
+      document.getElementById('loginName').value = state.user.name;
+      document.getElementById('loginDept').value = state.user.dept;
+    }
+    updateSyncStatus();
+  }
+
+  loadUser();
+  loadProgress();
+
+  if (state.user && state.user.name && state.user.dept){
+    showApp();
+  } else {
+    showLogin();
+  }
+
+  /* ===== Event handlers ===== */
+  document.getElementById('loginBtn').addEventListener('click', function(){
+    var name = document.getElementById('loginName').value.trim();
+    var dept = document.getElementById('loginDept').value;
+    if (!name){ document.getElementById('loginName').focus(); return; }
+    if (!dept){ document.getElementById('loginDept').focus(); return; }
+    state.user = { name: name, dept: dept, joinedAt: new Date().toISOString() };
+    saveUser();
+
+    // Register login on server (with 4s timeout — always proceeds)
+    showApp();
+    if (isOnlineMode()){
+      var _loginTimeout = setTimeout(function(){ hideToast(); }, 4000);
+      fetch(APPS_SCRIPT_URL, {
+        method:'POST', mode:'cors',
+        headers: { 'Content-Type':'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action:'register', name:name, dept:dept, ts:new Date().toISOString() })
+      }).then(function(r){return r.json()}).catch(function(){return {ok:false}})
+        .then(function(){ clearTimeout(_loginTimeout); hideToast(); });
+    }
+  });
+
+  document.getElementById('loginName').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') document.getElementById('loginBtn').click();
+  });
+
+  document.getElementById('userChip').addEventListener('click', function(){
+    document.getElementById('editName').value = state.user.name;
+    document.getElementById('editDept').value = state.user.dept;
+    document.getElementById('settingsModal').classList.add('show');
+  });
+
+  document.getElementById('cancelEdit').addEventListener('click', function(){
+    document.getElementById('settingsModal').classList.remove('show');
+  });
+
+  document.getElementById('saveEdit').addEventListener('click', function(){
+    var name = document.getElementById('editName').value.trim();
+    var dept = document.getElementById('editDept').value;
+    if (!name || !dept) return;
+    state.user.name = name;
+    state.user.dept = dept;
+    saveUser();
+    renderHeader();
+    autoSelectDept();
+    document.getElementById('settingsModal').classList.remove('show');
+    showToast('Identificação atualizada');
+  });
+
+  document.getElementById('logoutLink').addEventListener('click', function(){
+    if (!confirm('Queres mesmo sair? O progresso fica guardado e voltarás a vê-lo quando entrares com o mesmo nome.')) return;
+    state.user = null;
+    try { localStorage.removeItem(USER_KEY); } catch(e){}
+    document.getElementById('settingsModal').classList.remove('show');
+    document.getElementById('loginName').value = '';
+    document.getElementById('loginDept').value = '';
+    showLogin();
+  });
+
+  document.getElementById('settingsModal').addEventListener('click', function(e){
+    if (e.target === this) this.classList.remove('show');
+  });
+
+  // Department switcher
+  document.getElementById('deptBar').addEventListener('click', function(e){
+    var btn = e.target.closest('.dept-btn');
+    if(!btn) return;
+    renderDept(btn.dataset.d);
+  });
+
+  // Tabs
+  document.getElementById('tabs').addEventListener('click', function(e){
+    var t = e.target.closest('.tab');
+    if(!t) return;
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+    t.classList.add('active');
+    var f = t.dataset.fase;
+    document.querySelectorAll('.fase').forEach(function(el){
+      el.style.display = (f === 'all' || el.dataset.fase === f) ? '' : 'none';
+    });
+    if(f !== 'all') window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // Course toggle
+  document.body.addEventListener('click', function(e){
+    var btn = e.target.closest('.check-btn');
+    if(!btn) return;
+    e.preventDefault();
+    var row = btn.closest('.curso-row');
+    var id = row.dataset.id;
+    var nowDone;
+    if(state.progress[id]){
+      delete state.progress[id];
+      row.classList.remove('done');
+      nowDone = false;
+    } else {
+      state.progress[id] = { done:true, at: new Date().toISOString() };
+      row.classList.add('done');
+      nowDone = true;
+    }
+    saveLocalProgress();
+    updateProgress();
+
+    if (isOnlineMode()){
+      showToast('A guardar...', {loading:true, persist:true});
+      syncToServer(id, nowDone).then(function(res){
+        if (res && res.ok){
+          showToast('Guardado');
+        } else {
+          showToast('Guardado localmente (sem ligação)', {error:false, duration:2400});
+        }
+      });
+    } else {
+      showToast('Progresso guardado');
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
